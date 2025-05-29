@@ -17,7 +17,7 @@ var roleUsecase = NewRoleUsecase(roleRepository)
 func TestCreateRoleSuccess(t *testing.T) {
 	//Creating test role that will be inputted
 	testrole := &domain.Role{
-		Id:          01,
+		ID:          01,
 		Name:        "Admin",
 		Description: "Test Role",
 	}
@@ -31,22 +31,22 @@ func TestCreateRoleSuccess(t *testing.T) {
 func TestGetRoleSuccess(t *testing.T) {
 	//Creating the role that will be searched
 	testrole := domain.Role{
-		Id:          01,
+		ID:          01,
 		Name:        "Admin",
 		Description: "Test Role",
 	}
 	roleRepository.Mock.On("FindById", 01).Return(testrole)
 	result, err := roleUsecase.GetRole(01)
-	assert.Equal(t, testrole.Id, result.Id)
+	assert.Equal(t, testrole.ID, result.ID)
 	assert.Nil(t, err)
 	fmt.Println(result)
 }
 
 func TestListRoleSuccess(t *testing.T) {
 	testrole := []*domain.Role{
-		&domain.Role{Id: 01, Name: "Admin"},
-		&domain.Role{Id: 02, Name: "Co-Admin"},
-		&domain.Role{Id: 03, Name: "Vice Admin"},
+		&domain.Role{ID: 01, Name: "Admin"},
+		&domain.Role{ID: 02, Name: "Co-Admin"},
+		&domain.Role{ID: 03, Name: "Vice Admin"},
 	}
 	roleRepository.Mock.On("FindAll").Return(testrole, nil)
 	result, err := roleUsecase.ListRoles()
@@ -58,27 +58,29 @@ func TestListRoleSuccess(t *testing.T) {
 func TestUpdateRoleSuccess(t *testing.T) {
 	//old role
 	testrole := domain.Role{
-		Id:   01,
+		ID:   01,
 		Name: "Admin",
 	}
 	//new updated role
 	updatedrole := domain.Role{
-		Id:   01,
+		ID:   01,
 		Name: "President",
 	}
 	//testing so that when update method is called with "anything" as input
 	//it returns the updated role and nil errors
 	roleRepository.Mock.On("FindById", mock.Anything).Return(testrole, nil)
-	roleRepository.Mock.On("Update", testrole).Return(&updatedrole, nil)
+	roleRepository.Mock.On("Update", mock.Anything).Return(&updatedrole, nil)
 	result, err := roleUsecase.UpdateRole(&testrole)
 	assert.NotNil(t, result)
 	assert.Nil(t, err)
+	assert.Equal(t, "President", result.Name)
+	fmt.Println(result)
 }
 
 func TestDeleteRoleSuccess(t *testing.T) {
 	//role gonna be deleted
 	roletobedeleted := domain.Role{
-		Id:   03,
+		ID:   03,
 		Name: "Supervisor",
 	}
 	roleRepository.Mock.On("FindById", mock.Anything).Return(roletobedeleted)

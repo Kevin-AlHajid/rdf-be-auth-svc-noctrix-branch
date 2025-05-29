@@ -11,8 +11,10 @@ type RoleRepoMock struct {
 	Mock mock.Mock
 }
 
-func (r *RoleRepoMock) Create(name *domain.Role) (*domain.Role, error) {
-	args := r.Mock.Called(name)
+//THIS IS FOR TESTING USECASE
+
+func (r *RoleRepoMock) Create(role *domain.Role) (*domain.Role, error) {
+	args := r.Mock.Called(role)
 	return args.Get(0).(*domain.Role), args.Error(1)
 	//this gets the 0 position in arg, and converts them into domain.Role
 	//while the second position gets converted into error

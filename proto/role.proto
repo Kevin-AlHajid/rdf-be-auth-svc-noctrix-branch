@@ -14,7 +14,7 @@ service RoleService {
 }
 
 message Role {
-    Int64 RoleId = 1
+    Int RoleId = 1
     string Name = 2;
     string Description = 3;
     string CreatedAt = 4;
@@ -28,7 +28,7 @@ message CreateRoleRequest {
 }
 
 message GetRoleRequest {
-    string Name = 1;
+    Int Id = 1;
 }
 
 message ListRoleRequest {}

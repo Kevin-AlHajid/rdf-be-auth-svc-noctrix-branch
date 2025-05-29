@@ -6,15 +6,15 @@ import (
 
 // Making the main role struct
 type Role struct {
-	Id          int
-	Name        string
+	ID          int    `gorm:"primaryKey"`
+	Name        string `gorm:"unique"`
 	Description string
-	CreatedAt   *time.Time
-	UpdatedAt   *time.Time
+	CreatedAt   *time.Time `gorm:"autoCreateTime"`
+	UpdatedAt   *time.Time `gorm:"autoUpdateTime"`
 }
 
 type RoleRepository interface {
-	Create(Name *Role) (*Role, error)
+	Create(role *Role) (*Role, error)
 	FindAll() ([]*Role, error)
 	FindById(roleid int) (*Role, error)
 	Update(*Role) (*Role, error)
